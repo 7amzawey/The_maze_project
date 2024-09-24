@@ -12,6 +12,7 @@ int main(void) {
 
     int px = 48;
     int py = 48;
+    int angle = 0;
 
     int running = 1;
     SDL_Event event;
@@ -21,14 +22,14 @@ int main(void) {
             if (event.type == SDL_QUIT) {
                 running = 0;
             }
-            move_player(&px, &py, event);
+            move_player(&px, &py, &angle, event);
         }
 
         SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
         SDL_RenderClear(rend);
 
         draw_map(rend);
-        draw_player(rend, px, py);
+        draw_player(rend, px, py, angle);
 
         SDL_RenderPresent(rend);
     }

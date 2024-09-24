@@ -38,7 +38,7 @@ void draw_map(SDL_Renderer* rend) {
  * @py: the y cordinate.
  */
 
-void draw_player(SDL_Renderer* rend, int px, int py) {
+void draw_player(SDL_Renderer* rend, SDL_Texture *playerTexture, int px, int py, int angle) {
 	SDL_Rect player;
 	player.w = 16;
 	player.h = 8;
@@ -47,6 +47,8 @@ void draw_player(SDL_Renderer* rend, int px, int py) {
 	SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
 	SDL_RenderFillRect(rend, &player);
 	SDL_RenderDrawLine(rend, px + 8, py, px + 8, py + 16);
+	SDL_Point center = { player.w / 2, player.h / 2 };
+	SDL_RenderCopyEx(rend, playerTexture, NULL, &player, angle, &center, SDL_FLIP_NONE);
 }
 
 
@@ -65,9 +67,10 @@ int is_walkable(int x, int y) {
 	    		map[ty_bottom][tx_left] == 0 && map[ty_bottom][tx_right] == 0);
 }
 
-void move_player(int* px, int* py, SDL_Event event) {
+void move_player(int* px, int* py, int *angle, SDL_Event event) {
 	int new_x = *px;
 	int new_y = *py;
+	int new_angle = *angle;
 
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
@@ -83,10 +86,23 @@ void move_player(int* px, int* py, SDL_Event event) {
 			case SDLK_RIGHT:
 				new_x += 4;
 				break;
+			case SDLK_w:
+				new_angle = 0;
+				break;
+			case SDLK_s:
+				new_angle = 180;
+				break;
+			case SDLK_a:
+				new_angle = 270;
+				break;
+			case SDLK_d:
+				new_angle = 90;
+				break;
 		}
 		if (is_walkable(new_x, new_y)) {
 			*px = new_x;
 			*py = new_y;
 		}
+		*angle = new_angle;
 	}
 }
