@@ -4,11 +4,11 @@
  * @rend: the Renderer that draws the grids map
  */
 
-int map[10][10];
+int map[WIDTH][HEIGHT];
 
 void draw_map(SDL_Renderer* rend) {
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
+	for (int i = 0; i < WIDTH; i++) {
+		for (int j = 0; j < HEIGHT; j++) {
 			SDL_Rect tile;
 			tile.x = j * TILE_SIZE;
 			tile.y = i * TILE_SIZE;
@@ -60,7 +60,7 @@ int is_walkable(int x, int y) {
 	int tx_right = (x + 15) / TILE_SIZE;
 	int ty_top = y / TILE_SIZE;
 	int ty_bottom = (y + 7) / TILE_SIZE;
-	return (tx_left >= 0 && tx_right < 10 && ty_top >= 0 && ty_bottom < 10 &&
+	return (tx_left >= 0 && tx_right < WIDTH && ty_top >= 0 && ty_bottom < HEIGHT &&
 			map[ty_top][tx_left] == 0 && map[ty_top][tx_right] == 0 &&
 	    		map[ty_bottom][tx_left] == 0 && map[ty_bottom][tx_right] == 0);
 }

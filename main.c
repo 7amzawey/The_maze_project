@@ -4,14 +4,14 @@ int main(void) {
     SDL_Window *win = SDL_CreateWindow("Maze",
                     SDL_WINDOWPOS_UNDEFINED,
                     SDL_WINDOWPOS_UNDEFINED,
-                    640, 640, SDL_WINDOW_SHOWN); // Changed window size to match the map size
+                    672, 672, SDL_WINDOW_SHOWN); // Changed window size to match the map size
 
     SDL_Renderer* rend = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
 
     generateMaze(); // Generate the maze
 
-    int px = 80;
-    int py = 80;
+    int px = 48;
+    int py = 48;
 
     int running = 1;
     SDL_Event event;

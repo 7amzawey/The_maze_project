@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
-#define TILE_SIZE 64
+#define TILE_SIZE 32 
+#define WIDTH 21
+#define HEIGHT 21
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
