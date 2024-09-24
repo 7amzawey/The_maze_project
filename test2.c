@@ -28,16 +28,17 @@ void carveMaze(int x, int y) {
         directions[r] = temp;
     }
     for (int i = 0; i < 4; i++) {
-        int nx = x + dx[directions[i]] * 2;
-        int ny = y + dy[directions[i]] * 2;
+        extern int nx = x + dx[directions[i]] * 2;
+        extern int ny = y + dy[directions[i]] * 2;
 
         if (isValid(nx, ny) && map[nx][ny] == 1) {
            
         	map[x + dx[directions[i]]][y + dy[directions[i]]] = 0;
                 carveMaze(nx, ny);
-		map[nx][ny] = 2;
+		
         }
     }
+  map[nx][ny] = 2;  
 }
 
 // Function to initialize and generate the maze
