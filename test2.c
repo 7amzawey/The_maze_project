@@ -20,7 +20,6 @@ bool isValid(int x, int y) {
 void carveMaze(int x, int y) {
     map[x][y] = 0; // Mark current cell as path
 
-    // Randomly shuffle directions
     int directions[] = {0, 1, 2, 3};
     for (int i = 0; i < 4; i++) {
         int r = rand() % 4;
@@ -28,18 +27,15 @@ void carveMaze(int x, int y) {
         directions[i] = directions[r];
         directions[r] = temp;
     }
-
-    // Carve the maze in random order
     for (int i = 0; i < 4; i++) {
         int nx = x + dx[directions[i]] * 2;
         int ny = y + dy[directions[i]] * 2;
 
-        // Check if the neighboring cell is within bounds and is a wall
         if (isValid(nx, ny) && map[nx][ny] == 1) {
-            // Remove the wall between the current cell and the neighbor
-            map[x + dx[directions[i]]][y + dy[directions[i]]] = 0;
-            // Recurse to the neighboring cell
-            carveMaze(nx, ny);
+           
+        	map[x + dx[directions[i]]][y + dy[directions[i]]] = 0;
+                carveMaze(nx, ny);
+		map[nx][ny] = 2;
         }
     }
 }
@@ -61,21 +57,22 @@ void generateMaze() {
     carveMaze(start_x, start_y);
 
     // Create one random exit on the outer edge
-    map[WIDTH - 2][HEIGHT - 2] = 0; // You can randomize this as well
+    
 
     // Ensure the start is a path
     map[start_x][start_y] = 0;
 }
-
 // Function to print the maze for debugging
 void printMaze() {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             if (map[x][y] == 1) {
                 printf("#"); // Wall
-            } else {
+            } else if (map[x][y] == 0){
                 printf(" "); // Path
-            }
+            } else {
+		    printf("$");
+	    }
         }
         printf("\n");
     }
