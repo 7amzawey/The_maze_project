@@ -1,12 +1,18 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic
-LDFLAGS = -lSDL2
-SRC = main.c
-OBJ = $(SRC:.c=.o)
-EXEC = game
+LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_image -lm
 
-all: $(OBJ)
-    $(CC) $(CFLAGS) -o $(EXEC) $(OBJ) $(LDFLAGS)
+maze: main.o maze_generation.o draw_map.o
+	$(CC) $(CFLAGS) -o maze main.o maze_generation.o draw_map.o $(LDFLAGS)
 
+main.o: main.c
+	$(CC) $(CFLAGS) -c main.c
+
+draw_map.o: draw_map.c
+	$(CC) $(CFLAGS) -c draw_map.c
+
+maze_generation.o: maze_generation.c
+	$(CC) $(CFLAGS) -c maze_generation.c
 clean:
-    rm -f $(OBJ) $(EXEC)
+	rm -f maze main.o maze_generation.o draw_map.o
+
